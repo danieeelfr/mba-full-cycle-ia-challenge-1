@@ -19,6 +19,8 @@ REGRAS:
   "Não tenho informações necessárias para responder sua pergunta."
 - Nunca invente ou use conhecimento externo.
 - Nunca produza opiniões ou interpretações além do que está escrito.
+- Ao encontrar valores monetários, como R$ 10.000.000,00, reescreva-os por extenso em um formato mais amigável, como "10 milhões de reais".
+- Ao responder sobre valores monetários, formule uma frase completa. Por exemplo, se a pergunta for "Qual o faturamento?", a resposta deve ser "O faturamento foi de 10 milhões de reais." em vez de apenas "10 milhões de reais."
 
 EXEMPLOS DE PERGUNTAS FORA DO CONTEXTO:
 Pergunta: "Qual é a capital da França?"
@@ -39,22 +41,26 @@ RESPONDA A "PERGUNTA DO USUÁRIO"
 COLLECTION_NAME = os.getenv("PG_VECTOR_COLLECTION_NAME", "documents")
 DB_CONNECTION = os.getenv("DATABASE_URL", "postgresql+psycopg2://postgres:postgres@localhost:5432/rag")
 EMBEDDING_PROVIDER = os.getenv("EMBEDDING_PROVIDER", "gemini")
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 def get_embeddings():
     print(f"Using {EMBEDDING_PROVIDER} as embedding provider.")
     if EMBEDDING_PROVIDER == "openai":
         return OpenAIEmbeddings(
-            model=os.getenv("OPENAI_EMBEDDING_MODEL", "text-embedding-3-small")
+            model=os.getenv("OPENAI_EMBEDDING_MODEL", "text-embedding-3-small"),
+            api_key=OPENAI_API_KEY
         )
     return GoogleGenerativeAIEmbeddings(
-        model=os.getenv("GOOGLE_EMBEDDING_MODEL", "models/embedding-001")
+        model=os.getenv("GOOGLE_EMBEDDING_MODEL", "models/embedding-001"),
+        google_api_key=GOOGLE_API_KEY
     )
 
 def get_llm():
     print(f"Using {EMBEDDING_PROVIDER} as LLM provider.")
     if EMBEDDING_PROVIDER == "openai":
-        return ChatOpenAI(model=os.getenv("OPENAI_MODEL", "gpt-3.5-turbo"), temperature=0)
-    return ChatGoogleGenerativeAI(model=os.getenv("GOOGLE_MODEL", "gemini-1.5-flash-latest"), temperature=0)
+        return ChatOpenAI(model=os.getenv("OPENAI_MODEL", "gpt-3.5-turbo"), temperature=0, api_key=OPENAI_API_KEY)
+    return ChatGoogleGenerativeAI(model=os.getenv("GOOGLE_MODEL", "gemini-1.5-flash-latest"), temperature=0, google_api_key=GOOGLE_API_KEY)
 
 def search_prompt():
     """

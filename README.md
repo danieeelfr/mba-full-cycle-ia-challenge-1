@@ -20,8 +20,8 @@ Esta é uma solução para o desafio de Ingestão e Busca Semântica com LangCha
 
 1.  **Clone o repositório:**
     ```bash
-    git clone github.com:danieeelfr/mba-full-cycle-ia-challenge-1.git
-    cd 01-mba-ia-desafio-ingestao-busca
+    git clone https://github.com/danieeelfr/mba-full-cycle-ia-challenge-1.git
+    cd mba-full-cycle-ia-challenge-1
     ```
 
 2.  **Crie e ative um ambiente virtual (venv):**
@@ -37,7 +37,7 @@ Esta é uma solução para o desafio de Ingestão e Busca Semântica com LangCha
 
 4.  **Configure suas variáveis de ambiente:**
 
-    Crie um arquivo `.env` na raiz do projeto (você pode copiar o `.env.example`) e preencha as variáveis necessárias. Veja a seção abaixo para mais detalhes.
+    Crie um arquivo `.env` na raiz do projeto (você pode copiar o `.env.example`) e **preencha as variáveis necessárias**. Veja a seção abaixo para mais detalhes.
     ```bash
     cp .env.example .env
     ```
@@ -69,8 +69,8 @@ Esta é uma solução para o desafio de Ingestão e Busca Semântica com LangCha
 ## Configuração (Variáveis de Ambiente)
 
 - `EMBEDDING_PROVIDER`: Define qual provedor de IA usar.
-  - `"gemini"` para usar Google Gemini (padrão).
-  - `"openai"` para usar OpenAI.
+  - `gemini` para usar Google Gemini (padrão).
+  - `openai` para usar OpenAI.
 
 - `PDF_PATH`: Caminho para o documento PDF que será ingerido. O padrão é `document.pdf`.
 
@@ -85,5 +85,5 @@ Esta é uma solução para o desafio de Ingestão e Busca Semântica com LangCha
 - `OPENAI_MODEL`: Modelo de chat a ser usado. Padrão: `gpt-3.5-turbo`.
 
 #### Banco de Dados
-- `DATABASE_URL`: A connection string para o banco de dados PostgreSQL. O valor padrão já está configurado para funcionar com o `docker-compose.yml` fornecido.
+- `DATABASE_URL`: A connection string para o banco de dados PostgreSQL. O valor padrão, ideal para o ambiente Docker, está no arquivo `.env.example`.
 - `PG_VECTOR_COLLECTION_NAME`: Nome da "coleção" para armazenar os vetores no banco de dados. Padrão: `documents`.
